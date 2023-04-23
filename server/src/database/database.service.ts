@@ -26,4 +26,23 @@ export class DBService {
     // //quote model js to avoid error which would't be quoted
     // require("require-all")(__dirname + "/../models");
   }
+
+  public createSchema() {
+    const schema1 = new mongoose.Schema({
+      name: {type: String},
+      parent: {type: mongoose.SchemaTypes.ObjectId, ref: 'Category'},
+    });
+
+    const schema2 = new mongoose.Schema({
+      title: {type: String},
+      categories: [{type: mongoose.SchemaTypes.ObjectId, ref: 'Category'}],
+      body: {type: String},
+    },{
+      timestamps: true
+    });
+  
+
+    mongoose.model("Category", schema1);
+    mongoose.model("Article", schema2);
+  }
 }
